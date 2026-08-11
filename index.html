@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title id="page-title">Your Invitation — Salesforce Life Sciences</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ─── SITE NAV / LOGO BAR ───────────────────────────────────── -->
+  <div class="logobar" role="banner" aria-label="Salesforce branding">
+    <div class="logobar__inner">
+      <a href="#main-content" class="logobar__brand" aria-label="Salesforce home">
+        <img
+          src="assets/salesforce-logo.svg"
+          alt="Salesforce"
+          class="logobar__sf-logo"
+          width="160"
+          height="40"
+        />
+      </a>
+      <div class="logobar__divider" aria-hidden="true"></div>
+      <img
+        src="assets/life-sciences-logo.svg"
+        alt="Life Sciences World Tour Paris"
+        class="logobar__ls-logo"
+        width="220"
+        height="40"
+      />
+    </div>
+  </div>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────── -->
+  <header class="hero" role="region" aria-label="Invitation hero">
+    <!-- Eiffel Tower silhouette — decorative -->
+    <div class="hero__tower" aria-hidden="true">
+      <img
+        src="assets/eiffel-tower.svg"
+        alt=""
+        class="hero__tower-img"
+        width="260"
+        height="546"
+      />
+    </div>
+
+    <div class="hero__inner">
+      <p class="hero__eyebrow" id="hero-eyebrow"></p>
+      <h1 class="hero__headline" id="hero-headline"></h1>
+      <p class="hero__event-label" id="hero-event-label"></p>
+      <p class="hero__sub" id="hero-sub"></p>
+      <a class="btn btn--ghost hero__cta" id="hero-cta" href="#rsvp">View Invitation</a>
+    </div>
+    <div class="hero__rule" aria-hidden="true"></div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ─── EVENT DETAILS ──────────────────────────────────────── -->
+    <section class="section event-details" aria-labelledby="event-heading">
+      <div class="container container--narrow">
+        <div class="section__label" aria-hidden="true">The Summit</div>
+        <h2 class="event-details__name" id="event-heading" tabindex="-1"></h2>
+        <dl class="event-details__meta">
+          <div class="event-details__meta-item">
+            <dt>Date</dt>
+            <dd id="event-date"></dd>
+          </div>
+          <div class="event-details__meta-divider" aria-hidden="true">—</div>
+          <div class="event-details__meta-item">
+            <dt>Venue</dt>
+            <dd id="event-venue"></dd>
+          </div>
+          <div class="event-details__meta-divider" aria-hidden="true">—</div>
+          <div class="event-details__meta-item">
+            <dt>City</dt>
+            <dd id="event-city"></dd>
+          </div>
+        </dl>
+        <address class="event-details__address" id="event-address"></address>
+      </div>
+    </section>
+
+    <!-- ─── PERSONAL INVITATION ────────────────────────────────── -->
+    <section class="section invitation" aria-labelledby="invitation-heading">
+      <div class="container container--narrow">
+        <div class="section__label" aria-hidden="true">A Personal Note</div>
+        <h2 class="sr-only" id="invitation-heading">Personal Invitation</h2>
+        <blockquote class="invitation__message" id="invitation-message"></blockquote>
+        <footer class="invitation__from">
+          <span class="invitation__from-name" id="invitation-from-name"></span>
+          <span class="invitation__from-role" id="invitation-from-role"></span>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ─── RELEVANCE ──────────────────────────────────────────── -->
+    <section class="section relevance" aria-labelledby="relevance-heading">
+      <div class="container container--narrow">
+        <div class="section__label" aria-hidden="true">Why This Matters to You</div>
+        <h2 class="relevance__heading" id="relevance-heading">
+          An experience designed for <em id="relevance-company"></em>
+        </h2>
+        <p class="relevance__body" id="relevance-body"></p>
+      </div>
+    </section>
+
+    <!-- ─── HIGHLIGHTS ─────────────────────────────────────────── -->
+    <section class="section highlights" aria-labelledby="highlights-heading">
+      <div class="container">
+        <div class="section__label" aria-hidden="true">What to Expect</div>
+        <h2 class="highlights__heading" id="highlights-heading">Three sessions curated for you</h2>
+        <ul class="highlights__grid" id="highlights-grid" role="list"></ul>
+      </div>
+    </section>
+
+    <!-- ─── HOST ───────────────────────────────────────────────── -->
+    <section class="section host" aria-labelledby="host-heading">
+      <div class="container container--narrow">
+        <div class="section__label" aria-hidden="true">Your Host</div>
+        <div class="host__card">
+          <div class="host__photo" id="host-photo" aria-hidden="true">
+            <span class="host__photo-initials" id="host-initials"></span>
+          </div>
+          <div class="host__bio">
+            <h2 class="host__name" id="host-heading"></h2>
+            <p class="host__role" id="host-role"></p>
+            <p class="host__bio-text" id="host-bio-text"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── RSVP ───────────────────────────────────────────────── -->
+    <section class="section rsvp" id="rsvp" aria-labelledby="rsvp-heading">
+      <div class="container container--narrow rsvp__inner">
+        <img
+          src="assets/salesforce-logo.svg"
+          alt="Salesforce"
+          class="rsvp__logo"
+          width="140"
+          height="36"
+          aria-hidden="true"
+        />
+        <div class="section__label section__label--light" aria-hidden="true">Reserve Your Place</div>
+        <h2 class="rsvp__heading" id="rsvp-heading">
+          We hope to welcome you<br />to Paris in September
+        </h2>
+        <p class="rsvp__seats" id="rsvp-seats"></p>
+        <a class="btn btn--primary rsvp__cta" id="rsvp-cta" href="#rsvp"></a>
+        <p class="rsvp__deadline">
+          Kindly respond by <strong id="rsvp-deadline"></strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── CONCIERGE ──────────────────────────────────────────── -->
+    <section class="section concierge" aria-labelledby="concierge-heading">
+      <div class="container container--narrow">
+        <div class="section__label" aria-hidden="true">Questions?</div>
+        <h2 class="concierge__heading" id="concierge-heading">Your dedicated concierge</h2>
+        <div class="concierge__card">
+          <p class="concierge__note" id="concierge-note"></p>
+          <dl class="concierge__contact">
+            <div>
+              <dt>Name</dt>
+              <dd id="concierge-name"></dd>
+            </div>
+            <div>
+              <dt>Email</dt>
+              <dd><a id="concierge-email" href="#">—</a></dd>
+            </div>
+            <div>
+              <dt>Phone</dt>
+              <dd><a id="concierge-phone" href="#">—</a></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__inner">
+        <img
+          src="assets/salesforce-logo.svg"
+          alt="Salesforce"
+          class="site-footer__logo"
+          width="110"
+          height="28"
+        />
+        <p class="site-footer__legal" id="footer-legal"></p>
+        <a class="site-footer__privacy" id="footer-privacy" href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="invite-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
