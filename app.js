@@ -38,7 +38,8 @@
     setHTML(
       "hero-headline",
       d.executive.firstName +
-        ", we would be <em>delighted</em> to host you in Paris"
+        ", we would be <em>delighted</em> to host you in " +
+        escapeHTML(d.event.city)
     );
     setText("hero-event-label", d.event.name);
     setText("hero-sub", d.event.tagline);
@@ -100,6 +101,10 @@
     setText("host-initials", initials(d.host.name));
 
     /* rsvp */
+    if (d.rsvp.heading) {
+      var rsvpH = el("rsvp-heading");
+      if (rsvpH) rsvpH.innerHTML = escapeHTML(d.rsvp.heading).replace("\n", "<br />");
+    }
     setText("rsvp-seats", d.rsvp.seats);
     setText("rsvp-cta", d.rsvp.ctaLabel);
     setAttr("rsvp-cta", "href", d.rsvp.url);
