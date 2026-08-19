@@ -12,6 +12,13 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="styles.css" />
+  <!-- preload hero images — above the fold, fetchpriority="high" on desktop -->
+  <link rel="preload" as="image" href="assets/hero-desktop.webp" type="image/webp"
+        media="(min-width: 901px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/hero-tablet.webp" type="image/webp"
+        media="(min-width: 481px) and (max-width: 900px)" />
+  <link rel="preload" as="image" href="assets/hero-mobile.webp" type="image/webp"
+        media="(max-width: 480px)" />
 </head>
 <body>
 
@@ -40,16 +47,51 @@
 
   <!-- ─── HERO ─────────────────────────────────────────────────── -->
   <header class="hero" role="region" aria-label="Invitation hero">
-    <!-- Eiffel Tower silhouette — decorative -->
-    <div class="hero__tower" aria-hidden="true">
-      <img
-        src="assets/eiffel-tower.svg"
-        alt=""
-        class="hero__tower-img"
-        width="400"
-        height="520"
+
+    <!-- Manhattan background image — decorative, no alt text -->
+    <picture class="hero__bg-picture" aria-hidden="true">
+      <!-- mobile portrait: right crop centred on Chrysler Building -->
+      <source
+        media="(max-width: 480px)"
+        srcset="assets/hero-mobile.webp"
+        type="image/webp"
+        width="750" height="810"
       />
-    </div>
+      <source
+        media="(max-width: 480px)"
+        srcset="assets/hero-mobile.png"
+        width="750" height="810"
+      />
+      <!-- tablet: strips the near-black left third, keeps avenue + landmark -->
+      <source
+        media="(max-width: 900px)"
+        srcset="assets/hero-tablet.webp"
+        type="image/webp"
+        width="900" height="600"
+      />
+      <source
+        media="(max-width: 900px)"
+        srcset="assets/hero-tablet.png"
+        width="900" height="600"
+      />
+      <!-- desktop: full composition — headline zone left, city right -->
+      <source
+        srcset="assets/hero-desktop.webp"
+        type="image/webp"
+        width="1672" height="941"
+      />
+      <img
+        src="assets/hero-desktop.png"
+        alt=""
+        class="hero__bg-img"
+        width="1672" height="941"
+        fetchpriority="high"
+        decoding="sync"
+      />
+    </picture>
+
+    <!-- Gradient overlays: left text-zone veil + bottom fade -->
+    <div class="hero__overlay" aria-hidden="true"></div>
 
     <div class="hero__inner">
       <p class="hero__eyebrow" id="hero-eyebrow"></p>
