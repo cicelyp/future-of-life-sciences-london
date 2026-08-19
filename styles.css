@@ -155,7 +155,7 @@ a  { color: inherit; }
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(184, 151, 90, 0.25);
-  padding: 0.875rem 0;
+  padding: 0.5rem 0;
 }
 
 .logobar__inner {
@@ -163,7 +163,7 @@ a  { color: inherit; }
   margin-inline: auto;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .logobar__brand {
@@ -173,25 +173,27 @@ a  { color: inherit; }
   flex-shrink: 0;
 }
 
+/* Cloud logo is square — let it breathe */
 .logobar__sf-logo {
-  height: 32px;
-  width: auto;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 
 .logobar__divider {
   width: 1px;
-  height: 28px;
+  height: 32px;
   background: rgba(184, 151, 90, 0.35);
   flex-shrink: 0;
 }
 
 .logobar__ls-logo {
-  height: 32px;
+  height: 36px;
   width: auto;
 }
 
 /* offset body so fixed bar doesn't cover content */
-body { padding-top: 58px; }
+body { padding-top: 64px; }
 
 /* ─── HERO ────────────────────────────────────────────────────────────── */
 .hero {
@@ -618,10 +620,10 @@ body { padding-top: 58px; }
 .rsvp__logo {
   display: block;
   margin: 0 auto var(--space-md);
-  height: 28px;
-  width: auto;
-  opacity: 0.75;
-  filter: brightness(0) invert(1);
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  opacity: 0.9;
 }
 
 .rsvp__heading {
@@ -738,10 +740,10 @@ body { padding-top: 58px; }
 }
 
 .site-footer__logo {
-  height: 22px;
-  width: auto;
-  opacity: 0.35;
-  filter: brightness(0) invert(1);
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  opacity: 0.5;
   flex-shrink: 0;
 }
 
