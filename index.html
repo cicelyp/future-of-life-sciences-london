@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title id="page-title">Your Invitation — Life Sciences Summit</title>
+  <title>Your Invitation — The Future of Life Sciences</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -12,7 +12,6 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="styles.css" />
-  <!-- preload hero images — above the fold, fetchpriority="high" on desktop -->
   <link rel="preload" as="image" href="assets/hero-desktop.webp" type="image/webp"
         media="(min-width: 901px)" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/hero-tablet.webp" type="image/webp"
@@ -22,10 +21,13 @@
 </head>
 <body>
 
-  <!-- ─── LOGO BAR ──────────────────────────────────────────────── -->
+  <!-- ─── ARIA LIVE REGION — RSVP status announcements ────────────────── -->
+  <div id="rsvp-live" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+  <!-- ─── LOGO BAR ──────────────────────────────────────────────────────── -->
   <div class="logobar" role="banner" aria-label="Site header">
     <div class="logobar__inner">
-      <a href="#main-content" class="logobar__brand" aria-label="Salesforce">
+      <a href="#main-content" class="logobar__brand" aria-label="Salesforce — skip to content">
         <img
           src="assets/salesforce-cloud.png"
           alt="Salesforce"
@@ -37,133 +39,192 @@
       <div class="logobar__divider" aria-hidden="true"></div>
       <img
         src="assets/life-sciences-logo.svg"
-        alt="Life Sciences Summit — New York"
+        alt="The Future of Life Sciences Summit — New York"
         class="logobar__ls-logo"
         width="200"
         height="40"
       />
+      <div class="logobar__badge" aria-label="Private Executive Invitation">
+        Private Executive Invitation
+      </div>
     </div>
   </div>
 
-  <!-- ─── HERO ─────────────────────────────────────────────────── -->
-  <header class="hero" role="region" aria-label="Invitation hero">
+  <!-- ─── HERO ──────────────────────────────────────────────────────────── -->
+  <header class="hero" role="region" aria-label="Invitation">
 
-    <!-- Manhattan background image — decorative, no alt text -->
     <picture class="hero__bg-picture" aria-hidden="true">
-      <!-- mobile portrait: right crop centred on Chrysler Building -->
-      <source
-        media="(max-width: 480px)"
-        srcset="assets/hero-mobile.webp"
-        type="image/webp"
-        width="750" height="810"
-      />
-      <source
-        media="(max-width: 480px)"
-        srcset="assets/hero-mobile.png"
-        width="750" height="810"
-      />
-      <!-- tablet: strips the near-black left third, keeps avenue + landmark -->
-      <source
-        media="(max-width: 900px)"
-        srcset="assets/hero-tablet.webp"
-        type="image/webp"
-        width="900" height="600"
-      />
-      <source
-        media="(max-width: 900px)"
-        srcset="assets/hero-tablet.png"
-        width="900" height="600"
-      />
-      <!-- desktop: full composition — headline zone left, city right -->
-      <source
-        srcset="assets/hero-desktop.webp"
-        type="image/webp"
-        width="1672" height="941"
-      />
-      <img
-        src="assets/hero-desktop.png"
-        alt=""
-        class="hero__bg-img"
-        width="1672" height="941"
-        fetchpriority="high"
-        decoding="sync"
-      />
+      <source media="(max-width: 480px)"  srcset="assets/hero-mobile.webp" type="image/webp" width="750"  height="810" />
+      <source media="(max-width: 480px)"  srcset="assets/hero-mobile.png"                   width="750"  height="810" />
+      <source media="(max-width: 900px)"  srcset="assets/hero-tablet.webp" type="image/webp" width="900"  height="600" />
+      <source media="(max-width: 900px)"  srcset="assets/hero-tablet.png"                    width="900"  height="600" />
+      <source                             srcset="assets/hero-desktop.webp" type="image/webp" width="1672" height="941" />
+      <img src="assets/hero-desktop.png" alt="" class="hero__bg-img" width="1672" height="941" fetchpriority="high" decoding="sync" />
     </picture>
-
-    <!-- Gradient overlays: left text-zone veil + bottom fade -->
     <div class="hero__overlay" aria-hidden="true"></div>
 
+    <!-- Two-column hero content -->
     <div class="hero__inner">
-      <p class="hero__eyebrow" id="hero-eyebrow"></p>
-      <h1 class="hero__headline" id="hero-headline"></h1>
-      <p class="hero__event-label" id="hero-event-label"></p>
-      <p class="hero__sub" id="hero-sub"></p>
-      <a class="btn btn--ghost hero__cta" id="hero-cta" href="#rsvp">View Invitation</a>
+
+      <!-- LEFT: personalised invitation copy -->
+      <div class="hero__left">
+        <p class="hero__eyebrow" id="hero-eyebrow"></p>
+        <h1 class="hero__headline" id="hero-headline"></h1>
+        <p class="hero__event-label" id="hero-event-label"></p>
+        <ul class="hero__meta" aria-label="Event details">
+          <li><span class="hero__meta-label">Date</span><span id="hero-date" class="hero__meta-value"></span></li>
+          <li><span class="hero__meta-label">Venue</span><span id="hero-venue" class="hero__meta-value"></span></li>
+        </ul>
+        <p class="hero__sub" id="hero-sub"></p>
+        <p class="hero__selection" id="hero-selection"></p>
+        <a class="hero__explore-link" href="#experience">Explore your curated experience</a>
+      </div>
+
+      <!-- RIGHT: RSVP panel — state machine rendered by JS -->
+      <div class="rsvp-panel" id="rsvp-panel" aria-labelledby="rsvp-panel-heading">
+
+        <!-- STATE: invited (default) -->
+        <div class="rsvp-panel__state" id="rsvp-state-invited" aria-hidden="false">
+          <p class="rsvp-panel__eyebrow">Your private invitation</p>
+          <h2 class="rsvp-panel__heading" id="rsvp-panel-heading">Your place is being held</h2>
+          <p class="rsvp-panel__deadline">
+            Kindly respond by <strong id="rsvp-deadline-invited"></strong>
+          </p>
+          <button class="btn btn--primary rsvp-panel__accept" id="btn-accept" type="button">
+            Accept invitation
+          </button>
+          <button class="btn btn--text rsvp-panel__decline-link" id="btn-decline-open" type="button">
+            I'm unable to attend
+          </button>
+          <p class="rsvp-panel__support-text">Your response takes less than a minute</p>
+          <p class="rsvp-panel__privacy">
+            Your details are shared only with the event team.
+          </p>
+        </div>
+
+        <!-- STATE: accepting (step 2 — optional details) -->
+        <div class="rsvp-panel__state rsvp-panel__state--hidden" id="rsvp-state-accepting" aria-hidden="true">
+          <p class="rsvp-panel__eyebrow">One last step</p>
+          <h2 class="rsvp-panel__heading">Help us prepare for your visit</h2>
+          <p class="rsvp-panel__support-text rsvp-panel__support-text--top">
+            Optional — shared only with the event team.
+          </p>
+          <form class="rsvp-form" id="rsvp-accept-form" novalidate>
+            <div class="rsvp-form__field">
+              <label class="rsvp-form__label" for="field-dietary">Dietary requirements</label>
+              <input class="rsvp-form__input" type="text" id="field-dietary" name="dietary"
+                     placeholder="e.g. vegetarian, gluten-free" autocomplete="off" />
+            </div>
+            <div class="rsvp-form__field">
+              <label class="rsvp-form__label" for="field-accessibility">Accessibility requirements</label>
+              <input class="rsvp-form__input" type="text" id="field-accessibility" name="accessibility"
+                     placeholder="e.g. step-free access" autocomplete="off" />
+            </div>
+            <div class="rsvp-form__field">
+              <label class="rsvp-form__label" for="field-mobile">Mobile number</label>
+              <input class="rsvp-form__input" type="tel" id="field-mobile" name="mobile"
+                     placeholder="For event-related updates only" autocomplete="tel" />
+            </div>
+            <div class="rsvp-form__actions">
+              <button class="btn btn--primary" type="submit" id="btn-confirm">Confirm my place</button>
+              <button class="btn btn--text" type="button" id="btn-back-from-accept">Back</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- STATE: confirmed -->
+        <div class="rsvp-panel__state rsvp-panel__state--hidden" id="rsvp-state-confirmed" aria-hidden="true">
+          <span class="rsvp-panel__check" aria-hidden="true">✓</span>
+          <h2 class="rsvp-panel__heading rsvp-panel__heading--confirmed" id="rsvp-confirmed-heading"></h2>
+          <p class="rsvp-panel__confirmed-sub">We look forward to welcoming you to New York.</p>
+          <dl class="rsvp-panel__event-summary">
+            <div>
+              <dt>Date</dt>
+              <dd id="rsvp-confirmed-date"></dd>
+            </div>
+            <div>
+              <dt>Venue</dt>
+              <dd id="rsvp-confirmed-venue"></dd>
+            </div>
+          </dl>
+          <a class="btn btn--outline rsvp-panel__cal-btn" id="rsvp-cal-link" href="#" target="_blank" rel="noopener">
+            Add to calendar
+          </a>
+          <a class="hero__explore-link" href="#whats-new">See what's new for your experience</a>
+          <p class="rsvp-panel__return-note">Return here as your personalised summit experience takes shape.</p>
+        </div>
+
+        <!-- STATE: declining (confirm step) -->
+        <div class="rsvp-panel__state rsvp-panel__state--hidden" id="rsvp-state-declining" aria-hidden="true">
+          <p class="rsvp-panel__eyebrow">We understand</p>
+          <h2 class="rsvp-panel__heading">Unable to join us?</h2>
+          <p class="rsvp-panel__support-text rsvp-panel__support-text--top">
+            No explanation needed. A note is entirely optional.
+          </p>
+          <form class="rsvp-form" id="rsvp-decline-form" novalidate>
+            <div class="rsvp-form__field">
+              <label class="rsvp-form__label" for="field-decline-note">Note (optional)</label>
+              <textarea class="rsvp-form__input rsvp-form__textarea" id="field-decline-note"
+                        name="note" rows="3" placeholder=""></textarea>
+            </div>
+            <div class="rsvp-form__actions">
+              <button class="btn btn--outline rsvp-panel__decline-confirm" type="submit" id="btn-decline-confirm">
+                Confirm I'm unable to attend
+              </button>
+              <button class="btn btn--text" type="button" id="btn-back-from-decline">Back</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- STATE: declined -->
+        <div class="rsvp-panel__state rsvp-panel__state--hidden" id="rsvp-state-declined" aria-hidden="true">
+          <h2 class="rsvp-panel__heading" id="rsvp-declined-heading"></h2>
+          <p class="rsvp-panel__confirmed-sub">Thank you for letting us know. The content below remains available to you.</p>
+          <p class="rsvp-panel__privacy">
+            If your plans change, contact your concierge.
+          </p>
+        </div>
+
+      </div>
+      <!-- /rsvp-panel -->
+
     </div>
+    <!-- /hero__inner -->
+
     <div class="hero__rule" aria-hidden="true"></div>
   </header>
 
+  <!-- ─── MAIN CONTENT ──────────────────────────────────────────────────── -->
   <main id="main-content">
 
-    <!-- ─── EVENT DETAILS ──────────────────────────────────────── -->
-    <section class="section event-details" aria-labelledby="event-heading">
+    <!-- ─── YOUR SUMMIT heading ───────────────────────────────────────── -->
+    <div class="your-summit-label">
       <div class="container container--narrow">
-        <div class="section__label" aria-hidden="true">The Summit</div>
-        <h2 class="event-details__name" id="event-heading" tabindex="-1"></h2>
-        <dl class="event-details__meta">
-          <div class="event-details__meta-item">
-            <dt>Date</dt>
-            <dd id="event-date"></dd>
-          </div>
-          <div class="event-details__meta-divider" aria-hidden="true">—</div>
-          <div class="event-details__meta-item">
-            <dt>Venue</dt>
-            <dd id="event-venue"></dd>
-          </div>
-          <div class="event-details__meta-divider" aria-hidden="true">—</div>
-          <div class="event-details__meta-item">
-            <dt>City</dt>
-            <dd id="event-city"></dd>
-          </div>
-        </dl>
-        <address class="event-details__address" id="event-address"></address>
+        <h2 class="your-summit-label__heading" id="your-summit-heading"></h2>
+      </div>
+    </div>
+
+    <!-- ─── WHY YOU ────────────────────────────────────────────────────── -->
+    <section class="section why-you" aria-labelledby="why-you-heading" id="why-you">
+      <div class="container container--narrow">
+        <div class="section__label" aria-hidden="true">Why You</div>
+        <h3 class="why-you__heading" id="why-you-heading">
+          An experience designed for <em id="why-you-company"></em>
+        </h3>
+        <p class="why-you__body" id="why-you-body"></p>
       </div>
     </section>
 
-    <!-- ─── PERSONAL INVITATION ────────────────────────────────── -->
-    <section class="section invitation" aria-labelledby="invitation-heading">
-      <div class="container container--narrow">
-        <div class="section__label" aria-hidden="true">A Personal Note</div>
-        <h2 class="sr-only" id="invitation-heading">Personal Invitation</h2>
-        <blockquote class="invitation__message" id="invitation-message"></blockquote>
-        <footer class="invitation__from">
-          <span class="invitation__from-name" id="invitation-from-name"></span>
-          <span class="invitation__from-role" id="invitation-from-role"></span>
-        </footer>
-      </div>
-    </section>
-
-    <!-- ─── RELEVANCE ──────────────────────────────────────────── -->
-    <section class="section relevance" aria-labelledby="relevance-heading">
-      <div class="container container--narrow">
-        <div class="section__label" aria-hidden="true">Why This Matters to You</div>
-        <h2 class="relevance__heading" id="relevance-heading">
-          An experience designed for <em id="relevance-company"></em>
-        </h2>
-        <p class="relevance__body" id="relevance-body"></p>
-      </div>
-    </section>
-
-    <!-- ─── HIGHLIGHTS ─────────────────────────────────────────── -->
-    <section class="section highlights" aria-labelledby="highlights-heading">
+    <!-- ─── CURATED SESSIONS ───────────────────────────────────────────── -->
+    <section class="section sessions" aria-labelledby="sessions-heading" id="experience">
       <div class="container">
-        <div class="section__label" aria-hidden="true">What to Expect</div>
-        <h2 class="highlights__heading" id="highlights-heading">Three sessions curated for you</h2>
-        <ul class="highlights__grid" id="highlights-grid" role="list"></ul>
+        <div class="section__label" aria-hidden="true">Curated for You</div>
+        <h3 class="sessions__heading" id="sessions-heading">Three conversations selected for you</h3>
+        <ol class="sessions__list" id="sessions-list" role="list"></ol>
       </div>
     </section>
 
-    <!-- ─── HOST ───────────────────────────────────────────────── -->
+    <!-- ─── YOUR HOST ──────────────────────────────────────────────────── -->
     <section class="section host" aria-labelledby="host-heading">
       <div class="container container--narrow">
         <div class="section__label" aria-hidden="true">Your Host</div>
@@ -172,78 +233,89 @@
             <span class="host__photo-initials" id="host-initials"></span>
           </div>
           <div class="host__bio">
-            <h2 class="host__name" id="host-heading"></h2>
+            <h3 class="host__name" id="host-heading"></h3>
             <p class="host__role" id="host-role"></p>
+            <blockquote class="host__welcome" id="host-welcome"></blockquote>
             <p class="host__bio-text" id="host-bio-text"></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ─── RSVP ───────────────────────────────────────────────── -->
-    <section class="section rsvp" id="rsvp" aria-labelledby="rsvp-heading">
-      <div class="container container--narrow rsvp__inner">
-        <img
-          src="assets/salesforce-cloud.png"
-          alt="Salesforce"
-          class="rsvp__logo"
-          width="72"
-          height="72"
-          aria-hidden="true"
-        />
-        <div class="section__label section__label--light" aria-hidden="true">Reserve Your Place</div>
-        <h2 class="rsvp__heading" id="rsvp-heading"></h2>
-        <p class="rsvp__seats" id="rsvp-seats"></p>
-        <a class="btn btn--primary rsvp__cta" id="rsvp-cta" href="#rsvp"></a>
-        <p class="rsvp__deadline">
-          Kindly respond by <strong id="rsvp-deadline"></strong>
-        </p>
+    <!-- ─── THE EXPERIENCE ────────────────────────────────────────────── -->
+    <section class="section the-experience" aria-labelledby="experience-heading">
+      <div class="container container--narrow">
+        <div class="section__label" aria-hidden="true">The Experience</div>
+        <h3 class="the-experience__heading" id="experience-heading">What to expect</h3>
+        <ul class="experience-list" id="experience-list" role="list"></ul>
       </div>
     </section>
 
-    <!-- ─── CONCIERGE ──────────────────────────────────────────── -->
+    <!-- ─── WHAT'S NEW ─────────────────────────────────────────────────── -->
+    <section class="section whats-new" aria-labelledby="whats-new-heading" id="whats-new">
+      <div class="container container--narrow">
+        <div class="section__label" aria-hidden="true">What's New</div>
+        <h3 class="whats-new__heading" id="whats-new-heading">What's new for your experience</h3>
+        <p class="whats-new__return-note sr-only" id="whats-new-return-note">
+          Return here as your personalised summit experience takes shape.
+        </p>
+        <ol class="whats-new__list" id="whats-new-list" role="list"></ol>
+      </div>
+    </section>
+
+    <!-- ─── CONCIERGE ─────────────────────────────────────────────────── -->
     <section class="section concierge" aria-labelledby="concierge-heading">
       <div class="container container--narrow">
-        <div class="section__label" aria-hidden="true">Questions?</div>
-        <h2 class="concierge__heading" id="concierge-heading">Your dedicated concierge</h2>
+        <div class="section__label" aria-hidden="true">Your Concierge</div>
+        <h3 class="concierge__heading" id="concierge-heading">Your dedicated concierge</h3>
         <div class="concierge__card">
-          <p class="concierge__note" id="concierge-note"></p>
-          <dl class="concierge__contact">
-            <div>
-              <dt>Name</dt>
-              <dd id="concierge-name"></dd>
-            </div>
-            <div>
-              <dt>Email</dt>
-              <dd><a id="concierge-email" href="#">—</a></dd>
-            </div>
-            <div>
-              <dt>Phone</dt>
-              <dd><a id="concierge-phone" href="#">—</a></dd>
-            </div>
-          </dl>
+          <div class="concierge__bio">
+            <p class="concierge__name-line" id="concierge-name-line"></p>
+            <p class="concierge__note" id="concierge-note"></p>
+            <ul class="concierge__services" id="concierge-services" aria-label="Services available"></ul>
+          </div>
+          <div class="concierge__contact-block">
+            <a class="btn btn--outline concierge__cta" id="concierge-email-btn" href="#">
+              Contact your concierge
+            </a>
+            <dl class="concierge__contact">
+              <div>
+                <dt>Email</dt>
+                <dd><a id="concierge-email" href="#">—</a></dd>
+              </div>
+              <div>
+                <dt>Phone</dt>
+                <dd><a id="concierge-phone" href="#">—</a></dd>
+              </div>
+              <div>
+                <dt>Availability</dt>
+                <dd id="concierge-availability">—</dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
+  <!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
   <footer class="site-footer" role="contentinfo">
     <div class="container">
       <div class="site-footer__inner">
-        <img
-          src="assets/salesforce-cloud.png"
-          alt="Salesforce"
-          class="site-footer__logo"
-          width="40"
-          height="40"
-        />
+        <img src="assets/salesforce-cloud.png" alt="Salesforce" class="site-footer__logo" width="40" height="40" />
         <p class="site-footer__legal" id="footer-legal"></p>
         <a class="site-footer__privacy" id="footer-privacy" href="#">Privacy</a>
       </div>
     </div>
   </footer>
+
+  <!-- ─── MOBILE STICKY CTA ─────────────────────────────────────────────── -->
+  <div class="sticky-cta" id="sticky-cta" aria-hidden="true">
+    <button class="sticky-cta__btn" id="sticky-cta-btn" type="button">
+      Respond to your invitation
+    </button>
+  </div>
 
   <script src="invite-data.js"></script>
   <script src="app.js"></script>
